@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UEAN - Programacion WEB</title>
+ <link  type="text/css" rel="stylesheet" href="media/bootstrap.min.css"/>
+ <link rel="stylesheet" href="media/bootstrap.custom.css" type="text/css"/>
+ <script src="media/rutinas.js"></script>
+ <script src="media/bootstrap.min.js"></script>
+ <script src="media/bootstrap.js"></script>
+ 
+</head>
+<body >
+	<div id="divEncabezado">
+	   <br>
+	  <table class="table table-hover">
+		  <thead class="thead-dark">
+			<tr> 
+				<td>
+				   <img alt="" width="400" height="185" src="media/foto.jpg">
+				</td>
+				<td>    
+				 <span id="ambiente">Victor Julio Gomez Carvajal</span>
+				</td>
+				<td>
+				 <img alt="" width="400" height="185" src="media/logo-horizontal-es.png">
+				</td>
+			</tr>
+			<tr>
+			   <th>Profesion</th>
+			   <th>Edad</th>
+			   <th>Semestre</th>
+			 </tr>
+		  </thead>
+		  <tbody>
+			<tr>
+			   <th scope="row">Sistemas</th>
+			   <td>45</td>
+			   <td>Noveno</td>
+			</tr>
+		  </tbody>
+	  </table>
+	</div>
+    <div class="card" style="display:block">
+     <div class="card-header"><span id="mensaje">Mensaje</span>.</div>
+	 
+	 <div class="mensaje1">
+       <h3>Esta es mi Primera Pagina de HTML. </h3>
+     </div>
+    </div>
+  
+   <div  id="divDetalle" class="card" style="display:block">
+		<div class="card-header">Creaci&oacute;n </div>
+	   <div class="card-body">
+		  <div class="row">
+				<div class="form-group">
+					<label for="tipoDocumento">Tipo Documento de Identificacion</label>
+					<select class="form-control" id="tipoDocumento">
+					  <option value="1">Cedula</option>
+					  <option value="2">Tarjeta</option>
+					  <option value="3">Registro</option>
+					  <option value="4">NUIP</option>
+					  <option value="5">Extranjeria</option>
+					</select>
+				</div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <label for="documento">Documento Identificacion</label>
+			   <INPUT TYPE="Text" class="form-control form-control-sm" NAME="documento" id="documento" maxlength="12"  title="Documento" onkeypress="validarTecla(event, 'DE');" onFocus="this.value=desformatnum(this.value)" onBlur="this.value=formatnum(this.value)">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <label for="nombres">Nombres y Apellidos</label>
+			   <INPUT TYPE="Text" class="form-control form-control-sm" NAME="nombres" id="nombres" maxlength="30"  title="Nombres" onkeypress="validarTecla(event, 'LE');" onFocus="this.value=desformatnum(this.value)" onBlur="this.value=formatnum(this.value)"> 
+			   </div>
+		  </div>
+
+		  <div class="row">
+			   <div class="col-lg col-md col-sm col-xs-12">
+					  <label for="fechaNacimiento">Fecha de Nacimimiento (aaaa-mm-dd):</label>
+					  <INPUT TYPE="Text" class="form-control form-control-sm" NAME="fechaNacimiento" id="fechaNacimiento" maxlength="10"  title="FechaNacimiento" onkeypress="validarTecla(event, 'FE');" onFocus="this.value=desformatnum(this.value)" onBlur="this.value=formatnum(this.value)">
+			   </div>
+				   
+			   <div class="col-lg col-md col-sm col-xs-12">
+				   <label for="email">Email</label>
+				   <INPUT TYPE="Text" class="form-control form-control-sm" NAME="email" id="email" placeholder="name@example.com" maxlength="35" title="Email" onkeypress="validarEmail(event, 'EN');"> 
+			   </div>
+		  </div>
+		</div>
+	</div>
+
+	
+	 <div class="card" style="display:block">
+     <div class="card-header"><span id="Video">Audio y Video</span>.</div>
+     <div class="card-body">
+			 <audio controls>
+				<source src="mi-archivo-de-audio.ogg" type="audio/ogg">
+				<source src="media/Chayanne-Tiempo-Vals.mp3" type="audio/mpeg">
+				<source src="mi-archivo-de-audio.wav" type="audio/wav">
+				<object type="application/x-shockwave-flash" data="player.swf?miArchivo=media/Chayanne-Tiempo-Vals.mp3">
+					<param name="movie" value="player.swf?miArchivo=media/Chayanne-Tiempo-Vals.mp3">
+	
+				</object>
+			</audio>
+			
+		<div class="embed-container">
+			<iframe width="460" height="215" src="https://www.youtube.com/watch?v=-83eiJ9EaD4" allowfullscreen></iframe>
+		</div>
+			 
+		<iframe width="360" height="115" 
+			src="https://www.youtube.com/embed/85MppyLJHz0?showinfo=1"  
+			allowfullscreen>
+		</iframe>	 
+			 
+	 
+     </div>
+    </div>
+
+	<div class="card" style="display:block">
+     <div class="card-header"><span id="enlace">Enlaces</span>.</div>
+     <div class="card-body">
+			 <div>
+			  <a HREF="https://about.me/victorjulio/getstarted"> 
+               <p style="text-align:center">Mi Biografia</p>
+              </a>
+			  <p></p>
+			  <a HREF="http://www.ean.edu.co"><p style="text-align:center">Universidad EAN</p></a>
+			 </div>
+     </div>
+    </div>
+
+	 <div class="card" style="display:block">
+     <div class="card-header"><span id="fechaA">Fecha Actual</span>.</div>
+     <div class="card-body">
+	 <div>
+		 <script>
+			 <!--
+			 now = new Date();
+			 theHour = now.getHours();
+			 if (theHour < 12) { greeting = 'Buenos dias!  '; }
+			 else if (theHour < 18) { greeting = 'Buenas Tardes! '; }
+			 else { greeting = 'Buenas Noches! '; }
+			 document.write(greeting);
+			 //-->
+
+   			var now   = new Date();
+			var month = '';
+			var year  = '';
+			var date  = now.getDate();
+			if (now.getMonth() == 0) month = 'de enero'
+			if (now.getMonth() == 1) month = 'de febrero'
+			if (now.getMonth() == 2) month = 'de marzo'
+			if (now.getMonth() == 3) month = 'de abril'
+			if (now.getMonth() == 4) month = 'de mayo'
+			if (now.getMonth() == 5) month = 'de junio'
+			if (now.getMonth() == 6) month = 'de julio'
+			if (now.getMonth() == 7) month = 'de agosto'
+			if (now.getMonth() == 8) month = 'de septiembre'
+			if (now.getMonth() == 9) month = 'de octubre '
+			if (now.getMonth() == 10) month = 'de noviembre'
+			if (now.getMonth() == 11) month = 'de diciembre'
+			if (now.getYear() < 2000) year = 1900 + now.getYear()
+			if (now.getYear() >= 2000) var year = now.getYear()
+			document.write(date + '&nbsp;  ' + month + ' de  ' + year + ' . ' )
+			// -->
+		 </script> 
+	 </div>
+	 
+     </div>
+    </div>
+
+</body>
+</html>
+
+
+

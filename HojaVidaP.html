@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="es">
+ <head>
+ <meta charset="utf-8">
+ <title>Hoja de Vida del Indicador</title>
+ <link rel="shortcut icon" href="media/logo_favicon.gif" type="image/x-icon">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link href="media/favicon.ico" rel="icon" type="image/x-icon">
+ <link href="media/favicon.ico" rel="shortcut icon" type="image/x-icon">
+ <link  type="text/css" rel="stylesheet" href="media/bootstrap.min.css"/>
+ <link rel="stylesheet" href="media/bootstrap.custom.css" type="text/css"/>
+ <link  type="text/css" rel="stylesheet" href="media/datatables.min.css"/> 
+ <link  type="text/css" rel="stylesheet" href="media/menu.css"/>
+
+ <script src="media/jquery.min.js"></script>
+ <script src="media/bootstrap.min.js"></script>
+ <script src="media/datatables.min.js"></script>
+ <script src="media/menu.js"></script>
+ <script id="elMenu"></script>
+ <script src="media/template.js"></script>
+ <SCRIPT src="media/rutinas.js"></SCRIPT>
+ <script src="media/Chart.min.js"></script>
+ <script src="media/utils.js"></script> 
+ 
+ <SCRIPT>
+ var sVolver2="NO";
+ var sVolver="NO";
+ function Cargar(){
+  try {
+    if (document.forms[0]!=null){
+      document.forms[0].elements[0].focus();
+    }
+  }
+   catch(e){
+   }
+ }
+
+ function Salvar2(){
+   Ocultar();
+   if (sVolver2=="SI"){
+      return true;
+   }
+
+   return true;
+ }
+ function Salvar(){
+   var rta;
+   Ocultar();
+   if ($('#_operacion').val()=="L"){
+      return Salvar2();
+   }
+
+   if (sVolver=="SI"){
+      return true;
+   }
+
+  var resp = confirm('Esta seguro de realizar esta operaci\xf3n?'); 
+   if(!resp)  Mostrar(); 
+      return resp;
+ }
+
+ function Eliminar(){
+   $('#_operacion').val("E");
+   return true;
+ }
+
+ function Grabar(){
+   limpieza();
+   return true;
+ }
+
+ function Consultar(){
+   $('#_operacion').val("L");
+   return true;
+ }
+
+ function PreparaConsulta(){
+   sVolver2="SI";
+   sVolver="SI";
+   $('#_operacion').val("X");
+   return true;
+ }
+
+ function Salir(){
+    sVolver="SI";
+    if ($('#_operacion').val()=="M"){
+      $('#_operacion').val("V");
+    }
+    else {
+      $('#_operacion').val("X");
+    }
+    return true;
+ }
+
+ function Nuevo(){
+   sVolver="SI";
+   $('#_operacion').val("Nuevo");
+   return true;
+ }
+
+ function Modificar(){
+   sVolver="SI";
+   $('#_operacion').val("P");
+   return true;
+ }
+ 
+ </SCRIPT>
+ 
+  <style>
+	canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+ </style>
+ 
+ 
+ 
+</head>
+
+<body>
+ <table  class="table table-hover">
+  <tr>
+   <td>
+     <SCRIPT>
+       new menu (MENU_ITEMS0, MENU_POS0);
+     </script>
+   </td> 
+  </tr>
+ </table>
+<div class="container">
+ <FORM name="ff" ACTION="HojaVidaP.html" METHOD="post" onsubmit="return Salvar()">
+  <input type="hidden" name="_operacion" id="_operacion" value="X">
+
+  <div class="card" style="display:block">
+   <div class="card-body">
+    <div class="row">
+     <div class="col-lg col-md col-sm col-xs-2">
+       <span class="label label-primary">Hoja de Vida del Indicador</span>
+     </div>
+     <div class="col-lg col-md col-sm col-xs-10">
+      <div class="float-lg-right">
+       <input type="submit" class="btn btn-info"  value= "Consultar" id="btnConsultar"  onClick="PreparaConsulta();">
+       <input type="submit" class="btn btn-info"  value= "Nuevo" id="btnCrear" onClick="Nuevo();">
+       <input type="Button" class="btn btn-info"  value= "Ayuda" id="btnAyuda" onClick="show_help('DatHojaVidaP');">
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+  <br>
+  <div  id="divConsulta" class="card" style="display:block">
+   <div class="card-header">Consulta</div>
+    <div class="card-body">
+     <div class="row">
+        <div class="col-lg col-md col-sm col-xs-12">
+          <label for="fdescripcion">Descripci&oacute;n</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="descripcion" id="fdescripcion" maxlength="200" onkeypress="validarTecla(event, 'AL');">
+        </div>
+
+
+        <div class="col-lg col-md col-sm col-xs-12">
+          <label for="fgrupoIndicador">Grupo Indicador (Macroproceso</label>
+          <SELECT name="grupoIndicador" class="form-control form-control-sm" id="fgrupoIndicador"></SELECT>
+        </div>
+		
+
+		<div class="col-lg col-md col-sm col-xs-12">
+         <label for="fcodigoProceso">Proceso </label>
+         <SELECT NAME="codigoProceso" class="form-control form-control-sm" id="fcodigoProceso"></SELECT>
+        </div>	
+		
+		<div class="col-lg col-md col-sm col-xs-12">
+          <label for="fcodigoArea">Area u Oficina</label>
+         <SELECT NAME="codigoArea" class="form-control form-control-sm" id="fcodigoArea"></SELECT>
+        </div>
+		
+		
+		<div class="col-lg-2 col-md col-sm col-xs-3">
+         <label for="fcodigoFin">Fin u Objetivo del Indicador</label>
+         <SELECT NAME="codigoFin" class="form-control form-control-sm" id="fcodigoFin"></SELECT>
+        </div>
+		
+		
+        <div class="col-lg col-md col-sm col-xs-12">
+          <label for="festado">Estado</label>
+         <SELECT name="estado" class="form-control form-control-sm" id="festado"></SELECT>
+        </div>
+
+
+        <div class="col-lg col-md col-sm col-xs-12">
+          <label for="fAo">Ao</label>
+         <SELECT name="Ao" class="form-control form-control-sm" id="fAo"></SELECT>
+        </div>
+		
+		
+	
+      </div>
+      <div class="row">
+       <div class="col-lg col-md col-sm col-xs-12">
+        <div class="float-lg-right">
+         <input type="submit" class="btn btn-info"  value= "Consultar" onClick="Consultar();">
+        </div>
+       </div>
+      </div>
+    </div>
+   </div>
+
+
+  <div id="divResultados">
+   <br>
+   <table id="tblDatos" class="table table-bordered table-hover table-sm">
+    <thead>
+     <tr>
+        <th class="cf2">Key</th>
+        <th class="cf1">Descripci&oacute;n</th>
+        <th class="cf2">Grupo Indicador</th>
+        <th class="cf1">C&oacute;digo Proceso</th>
+        <th class="cf2">C&oacute;digo Area</th>
+		<th class="cf1">C&oacute;digo Fin</th>
+
+     </tr>
+    </thead>
+   <tbody id="tblDetalle">
+   </tbody>
+  </table>
+ </div>
+
+ 	
+ <br> 
+  <div  id="divEdicion" class="card" style="display:block">
+   <div class="card-header">Edici&oacute;n</div>
+    <div class="card-body">
+	  <div class="row">
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="keyEd">Codigo Indicador</label>
+       <input class="form-control form-control-sm osc" id="keyEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="descripcionEd">Descripci&oacute;n Indicador</label>
+       <input class="form-control form-control-sm osc" id="descripcionEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="grupoIndicadorEd">Grupo Indicador</label>
+       <input class="form-control form-control-sm osc" id="grupoIndicadorEd">
+       </div>
+
+	   </div>
+	   
+	  <div class="row">
+	   	   
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="codigoObjetivoEd">C&oacute;digo Objetivo</label>
+       <input class="form-control form-control-sm osc" id="codigoObjetivoEd">
+       </div>
+
+      </div>
+
+     <div class="row">
+	  
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="codigoPoliticaEd">C&oacute;digo Politica</label>
+       <input class="form-control form-control-sm osc" id="codigoPoliticaEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="codigoProcesoEd">C&oacute;digo Proceso</label>
+       <input class="form-control form-control-sm osc" id="codigoProcesoEd">
+       </div>
+
+	
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="codigoAreaEd">C&oacute;digo Area</label>
+       <input class="form-control form-control-sm osc" id="codigoAreaEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="codigoFinEd">C&oacute;digo Fin</label>
+       <input class="form-control form-control-sm osc" id="codigoFinEd">
+       </div>
+	   
+	  
+      </div>
+
+	  <div class="row">
+	  
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="tipoCalculoEd">Tipo Calculo</label>
+       <input class="form-control form-control-sm osc" id="tipoCalculoEd">
+       </div>
+	  
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="estadoEd">Estado</label>
+       <input class="form-control form-control-sm osc" id="estadoEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="tipoIndicadorEd">Tipo Indicador</label>
+       <input class="form-control form-control-sm osc" id="tipoIndicadorEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="frecuenciaDatosEd">Frecuencia Datos</label>
+       <input class="form-control form-control-sm osc" id="frecuenciaDatosEd">
+       </div>
+	   
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="frecuenciaAnalisisEd">Frecuencia Analisis</label>
+       <input class="form-control form-control-sm osc" id="frecuenciaAnalisisEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="responsableIndicadorEd">Responsable Indicador</label>
+       <input class="form-control form-control-sm osc" id="responsableIndicadorEd">
+       </div>
+
+      </div>
+
+	  <div class="row">
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="formulaEd">Formula</label>
+       <input class="form-control form-control-sm osc" id="formulaEd">
+       </div>
+	   
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="numeradorEd">Numerador</label>
+       <input class="form-control form-control-sm osc" id="numeradorEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="denominadorEd">Denominador</label>
+       <input class="form-control form-control-sm osc" id="denominadorEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="variable3Ed">Variable3</label>
+       <input class="form-control form-control-sm osc" id="variable3Ed">
+       </div>
+	   
+	   
+	  </div>
+	   
+	  <div class="row"> 
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="unidadMedidaEd">Unidad Medida</label>
+       <input class="form-control form-control-sm osc" id="unidadMedidaEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="tendenciaEd">Tendencia</label>
+       <input class="form-control form-control-sm osc" id="tendenciaEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="responsableAnalisisEd">Responsable Analisis</label>
+       <input class="form-control form-control-sm osc" id="responsableAnalisisEd">
+       </div>
+
+      </div>
+
+	  <div class="row">
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="rangoBajoEd">Rango Bajo</label>
+       <input class="form-control form-control-sm osc" id="rangoBajoEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="rangoMedioEd">Rango Medio</label>
+       <input class="form-control form-control-sm osc" id="rangoMedioEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="rangoAltoEd">Rango Alto</label>
+       <input class="form-control form-control-sm osc" id="rangoAltoEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="metaEd">Meta</label>
+       <input class="form-control form-control-sm osc" id="metaEd">
+       </div>
+
+      </div>
+
+	  <div class="row">
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="atributoCalidadEd">Atributo Calidad</label>
+       <input class="form-control form-control-sm osc" id="atributoCalidadEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="grupoEstandarEd">Grupo Estandar</label>
+       <input class="form-control form-control-sm osc" id="grupoEstandarEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="proyectadoEd">Proyectado</label>
+       <input class="form-control form-control-sm osc" id="proyectadoEd">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="AoEd">Ao</label>
+       <input class="form-control form-control-sm osc" id="AoEd">
+       </div>
+	   
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="AoaEd">Aoa</label>
+       <input class="form-control form-control-sm osc" id="AoaEd">
+       </div>
+
+      </div>
+   </div>
+   </div>
+   
+   <br>	
+   <br>
+  
+  <div class="card" style="display:block">
+  <div class="card-header">Cuadro de Meses</div>
+  <div class="card-body">
+
+		  <div class="row"> 
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <label>CONCEPTO</label>
+			   </div>
+		  	  
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <label>ENERO</label>
+			   </div>
+			   
+			    <div class="col-lg col-md col-sm col-xs-12">
+			   <label>FEBRERO</label>
+			   </div>
+		  
+		      <div class="col-lg col-md col-sm col-xs-12">
+			   <label>MARZO</label>
+			   </div>
+		  
+		  	   <div class="col-lg col-md col-sm col-xs-12">
+			   <label>ABRIL</label>
+			   </div>
+	
+		  	   <div class="col-lg col-md col-sm col-xs-12">
+			   <label>MAYO</label>
+			   </div>
+	
+  	           <div class="col-lg col-md col-sm col-xs-12">
+			   <label>JUNIO</label>
+			   </div>
+ 
+               <div class="col-lg col-md col-sm col-xs-12">
+			   <label>JULIO</label>
+			   </div>
+
+               <div class="col-lg col-md col-sm col-xs-12">
+			   <label>AGOSTO</label>
+			   </div>
+
+               <div class="col-lg col-md col-sm col-xs-12">
+			   <label>SEPTIEMBRE</label>
+			   </div>
+
+               <div class="col-lg col-md col-sm col-xs-12">
+			   <label>OCTUBRE</label>
+			   </div>
+ 
+               <div class="col-lg col-md col-sm col-xs-12">
+			   <label>NOVIEMBRE</label>
+			   </div>	
+
+               <div class="col-lg col-md col-sm col-xs-12">
+			   <label>DICIEMBRE</label>
+			   </div>			   
+	
+		  
+	      </div>	  
+		  
+		  <div class="row"> 
+		  
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <label>PROYECTADO</label>
+			   <input class="form-control form-control-sm osc" >
+			   </div>
+		  
+		  
+		  
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="eneromEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="febreromEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="marzomEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="abrilmEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="mayomEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="juniomEd">
+			   </div>
+			   
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="juliomEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="agostomEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="septiembremEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="octubremEd">
+			   </div>
+			   
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="noviembremEd">
+			   </div>
+
+			   <div class="col-lg col-md col-sm col-xs-12">
+			   <input class="form-control form-control-sm osc" id="diciembremEd">
+			   </div>
+	  
+		  </div> 
+  
+
+		  <div class="row">
+		   
+			<div class="col-lg col-md col-sm col-xs-12">
+			   <label>EJECUTADO</label>
+			   <input class="form-control form-control-sm osc" >
+			</div>
+		   
+		   
+		   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="eneroEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="febreroEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="marzoEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="abrilEd">
+		   </div>
+
+	   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="mayoEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="junioEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="julioEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="agostoEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="septiembreEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="octubreEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="noviembreEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="diciembreEd">
+		   </div>
+
+		  </div>
+	  
+	    <div class="row">
+	       
+		   
+			<div class="col-lg col-md col-sm col-xs-12">
+			   <label>NUMERADOR</label>
+			   <input class="form-control form-control-sm osc" >
+			</div>
+	   
+		   
+		   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="eneronEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="febreronEd">
+		   </div>
+		  
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="marzonEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="abrilnEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="mayonEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="junionEd">
+		   </div>
+		  
+		  
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="julionEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="agostonEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="septiembrenEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="octubrenEd">
+		   </div>
+		  
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="noviembrenEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="diciembrenEd">
+		   </div>
+	  
+	    </div>
+	  
+	  	<div class="row">
+	  
+		   <div class="col-lg col-md col-sm col-xs-12">
+			   <label>DENOMINADOR</label>
+			   <input class="form-control form-control-sm osc" >
+			</div>
+		   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="enerodEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="febrerodEd">
+   		   </div>
+		   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="marzodEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="abrildEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="mayodEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="juniodEd">
+		   </div>
+			   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="juliodEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="agostodEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="septiembredEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="octubredEd">
+		   </div>
+		   
+		   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="noviembredEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="diciembredEd">
+		   </div>
+	  
+	    </div>
+		
+        <div class="row">
+
+		   
+		    <div class="col-lg col-md col-sm col-xs-12">
+			   <label>CUMPLIMIENTO</label>
+			   <input class="form-control form-control-sm osc" >
+			</div>
+		   
+		   
+		   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="enerocEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="febrerocEd">
+		   </div>
+       
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="marzocEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="abrilcEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="mayocEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="juniocEd">
+		   </div>
+		   
+		   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="juliocEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="agostocEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="septiembrecEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="octubrecEd">
+		   </div>
+		   
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="noviembrecEd">
+		   </div>
+
+		   <div class="col-lg col-md col-sm col-xs-12">
+		   <input class="form-control form-control-sm osc" id="diciembrecEd">
+		   </div>		   
+		
+	    </div>	 
+
+  
+    </div>
+  </div>
+
+  <div style="width:50%;">
+		<canvas id="canvas"></canvas> 
+  </div>
+   <br>  
+
+  <div class="card" style="display:block">
+  <div class="card-header">Analisis </div>
+  <div class="card-body">
+
+  <div id="divResultados1">
+   <br>
+   <table id="tblDatos1" class="table table-bordered table-hover table-sm">
+    <thead>
+     <tr>
+        <th class="cf2">Periodo</th>
+        <th class="cf1">Analisis y Conclusiones del Indicador</th>
+        <th class="cf2">Estrategias de Mejoramiento</th>
+        <th class="cf1">Responsable</th>
+
+     </tr>
+    </thead>
+   <tbody id="tblDetalle1">
+
+   </tbody>
+
+  </table>
+  
+         <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>ENERO</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="eneroaEd">Eneroa</label>
+					<input class="form-control form-control-sm osc" id="eneroaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="eneroeEd">Eneroe</label>
+			   <input class="form-control form-control-sm osc" id="eneroeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 
+
+         <div class="row">			 
+
+			   <div class="col-lg-1">
+				 <label>FEBRERO</label>
+				 <input class="form-control form-control-sm osc">>
+			   </div>
+     
+			 <div class="col-lg-5">
+				<label for="febreroaEd">Febreroa</label>
+				<input class="form-control form-control-sm osc" id="febreroaEd">
+			 </div> 
+
+			 <div class="col-lg-5">
+				<label for="febreroeEd">Febreroe</label>
+				<input class="form-control form-control-sm osc" id="febreroeEd">
+			  </div>
+			  
+			   <div class="col-lg-1">
+				 <label>RESPONSABLE</label>
+				 <input class="form-control form-control-sm osc">>
+			   </div>
+		 </div> 
+
+         <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>MARZO</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="marzoaEd">Marzoa</label>
+					<input class="form-control form-control-sm osc" id="marzoaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="marzoeEd">Marzoe</label>
+			   <input class="form-control form-control-sm osc" id="marzoeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 
+		 
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>ABRIL</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="abrilaEd">Abrila</label>
+					<input class="form-control form-control-sm osc" id="abrilaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="abrileEd">Abrile</label>
+			   <input class="form-control form-control-sm osc" id="abrileEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 		 
+
+
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>MAYO</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="mayoaEd">Mayoa</label>
+					<input class="form-control form-control-sm osc" id="mayoaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="mayoeEd">Mayoe</label>
+			   <input class="form-control form-control-sm osc" id="mayoeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 		 
+
+
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>JUNIO</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="junioaEd">Junioa</label>
+					<input class="form-control form-control-sm osc" id="junioaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="junioeEd">Junioe</label>
+			   <input class="form-control form-control-sm osc" id="junioeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 		 
+
+		 
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>JULIO</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="julioaEd">Julioa</label>
+					<input class="form-control form-control-sm osc" id="julioaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="julioeEd">Julioe</label>
+			   <input class="form-control form-control-sm osc" id="julioeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 	
+
+
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>AGOSTO</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="agostoaEd">Agostoa</label>
+					<input class="form-control form-control-sm osc" id="agostoaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="agostoeEd">Agostoe</label>
+			   <input class="form-control form-control-sm osc" id="agostoeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 	
+		 
+		 
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>SEPTIEMBRE</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="septiembreaEd">Septiembrea</label>
+					<input class="form-control form-control-sm osc" id="septiembreaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="septiembreeEd">Septiembree</label>
+			   <input class="form-control form-control-sm osc" id="septiembreeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 	
+
+
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>OCTUBRE</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="octubreaEd">Octubrea</label>
+					<input class="form-control form-control-sm osc" id="octubreaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="octubreeEd">Octubree</label>
+			   <input class="form-control form-control-sm osc" id="octubreeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 	
+
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>NOVIEMBRE</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="noviembreaEd">Noviembrea</label>
+					<input class="form-control form-control-sm osc" id="noviembreaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="noviembreeEd">Noviembree</label>
+			   <input class="form-control form-control-sm osc" id="noviembreeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <input class="form-control form-control-sm osc" >
+				</div>
+			   
+		 </div> 	
+
+        <div class="row">	
+				<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>DICIEMBRE</label>
+				   <input class="form-control form-control-sm osc">
+				</div>
+				
+				<div class="col-lg-5 col-md col-sm col-xs-12">
+					<label for="diciembreaEd">Diciembrea</label>
+					<input class="form-control form-control-sm osc" id="diciembreaEd">
+				</div>
+			
+			   <div class="col-lg-5 col-md col-sm col-xs-12">
+			   <label for="diciembreeEd">Diciembree</label>
+			   <input class="form-control form-control-sm osc" id="diciembreeEd">
+			   </div>
+			   
+			   	<div class="col-lg-1 col-md col-sm col-xs-12">
+				   <label>RESPONSABLE</label>
+				   <span class="form-control form-control-sm osc" >&nbsp;</span>
+				</div>
+			   
+		 </div> 
+   <br>
+		  <div class="row">
+		   <div class="col-lg col-md col-sm col-xs-12">
+			<div class="float-lg-right">
+				<input type="hidden" name="key" id="keyKey">
+			  <input type="submit" class="btn btn-info" value="Editar"   id="btnModificar" onclick="Modificar();">
+			</div>
+		   </div>
+		   </div>		 
+      </div> 	
+      </div> 
+	  </div>
+ </FORM>
+ </div>
+ 
+ <script>
+ $(document).ready(function() {
+ $('#tblDatos').DataTable({
+ "language": {
+ "url": "media/Spanish.json"
+ }
+ });
+ } );
+ </script>
+ 
+ <script>
+		var config = {
+			type: 'line',
+			data: {
+				labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+				datasets: [{
+					label: 'Proyectado',
+					backgroundColor: window.chartColors.red,
+					borderColor: window.chartColors.red,
+					data: [10, 30, 39, 20, 25, 34, -10],
+					fill: false,
+				}, {
+					label: 'Cumplimiento',
+					fill: false,
+					backgroundColor: window.chartColors.blue,
+					borderColor: window.chartColors.blue,
+//					data: ["eneroEd", febreroEd, marzoEd, abrilEd, mayoEd, junioEd, julioEd, agostoEd, septiembreEd, octubreEd, noviembreEd, diciembreEd],
+   				data: [eneroEd, febreroEd, marzoEd, 25, 15, 14, 30],
+
+				}]
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Grid Line Settings'
+				},
+				scales: {
+					yAxes: [{
+						gridLines: {
+							drawBorder: false,
+							color: ['pink', 'red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'purple']
+						},
+						ticks: {
+							min: 0,
+							max: 100,
+							stepSize: 10
+						}
+					}]
+				}
+			}
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myLine = new Chart(ctx, config);
+		};
+</script>
+ 
+ 
+ </body>
+</html>

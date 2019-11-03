@@ -1,0 +1,71 @@
+/* Style for a block - TABLE */
+.mtable {
+	background: white;
+}
+/* Style for outer tag, mout (mouse out) state */
+.mouter {
+	background: white;
+}
+/* Style for inner tag, mover (mouse over) state */
+.minner {
+	background: ffeca8;
+}
+
+/* rollover effect for blue menu */
+.m1table2 {
+	border: 1px outset #84B2C6; 
+}
+.m1out2 {
+	border:1px solid #adbed3;
+	background: #FFFFFF; 
+}
+.m1over2 {
+	background: #ffeca8;
+}
+
+/* rollover effect for gold menu */
+.m2table2 {
+	border: 1px outset #C6AA42;
+}
+.m2out2 {
+	background: #FFCB63;
+}
+.m2over2 {
+	background: #FFE77B;
+}
+
+/* item text */
+.minner2 {
+	font: bold 11px tahoma, arial, verdana;
+	color: #008c44;
+	padding: 4px;
+}
+
+.mXPtable {
+	border-top: 1px solid #93A070;
+	border-left: 1px solid #93A070;
+	border-right: 1px solid #93A070;
+	border-bottom: 1px solid #93A070;
+	background: white;
+}
+
+/*
+Color del fondo del menu principal
+*/
+.mXPmouto {
+	background: #EFEDDE;
+}
+
+/*
+Color de la letra del submenu
+*/
+.a0{
+	font-family: Tahoma, MS Sans Serif;
+	color: #223D6C;
+}
+
+.a1{
+	font-family: Tahoma, MS Sans Serif;
+	background: #223D6C;
+}
+

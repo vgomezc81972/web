@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UEAN - Programacion WEB</title>
+ <link  type="text/css" rel="stylesheet" href="media/bootstrap.min.css"/>
+ <link rel="stylesheet" href="media/bootstrap.custom.css" type="text/css"/>
+ <script src="media/jquery.min.js"></script>
+ <script src="media/rutinas.js"></script>
+ <script src="media/bootstrap.min.js"></script>
+ <script src="media/bootstrap.js"></script>
+ 
+ <link rel="stylesheet" type="text/css" media="all" href="media/calendar-green.css" title="win2k-cold-1">
+	<script src="media/calendar.js"></script>
+	<script src="media/calendar-es.js"></script>
+	<script src="media/calendar-setup.js"></script>
+	 
+
+ <script>
+  $(document).ready(function(){
+      $('#bt_add').click(function(){
+	     agregar();
+	  });
+	  $('#bt_del').click(function(){
+	     eliminar(id_fila_selected);
+      });
+   });	
+   var cont=0;
+	var names=document.getElementsByName('name[]');
+ </script>
+ 
+ 
+ 
+</head>
+<body >
+	<div id="divEncabezado">
+	   <br>
+
+	   <table class="table table-hover">
+		  <tr> 
+			<td>
+			  <img alt="" height="95" src="media/logosubrednorte.jpg">
+			</td>
+			<td>    
+	
+			     <span id="ambiente">Sistema de Indicadores - BSC</span>
+
+			</td>
+		  </tr>
+		  <tr>
+			<td >
+			  <img alt=""  src="media/z.gif" width="1" height="1">
+			</td>
+			<td >
+			 <img alt="" src="medi/z.gif" width="1" height="1">
+			</td>
+		  </tr>
+	   </table>
+	   
+	</div>
+    <div class="card" style="display:block">
+     <div class="card-header"><span id="mensaje">Mensaje</span>.</div>
+	 
+	 <div class="mensaje1">
+       <h3>Registro de Indicadores. </h3>
+     </div>
+    </div>
+  
+   <div  id="divDetalle" class="card" style="display:block">
+	   <div class="card-header">Creaci&oacute;n </div>
+	       <div class="card-body">
+	  <div class="row">
+	   <div class="col-lg-1 col-md col-sm col-xs-1">
+       <label for="codigoIndicador">C&oacute;digo Indicador</label>
+       <INPUT TYPE="Text" class="form-control form-control-sm" NAME="codigoIndicador" id="codigoIndicador" maxlength="5"  onkeypress="validarTecla(event, 'EN');">
+       </div>
+
+	   <div class="col-lg-7 col-md col-sm col-xs-5">
+       <label for="descripcion">Descripci&oacute;n del Indicador</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="descripcion" id="descripcion" maxlength="299"  onkeypress="validarTecla(event, 'AL');">
+       </div>
+
+	   <div class="col-lg-2 col-md col-sm col-xs-3">
+       <label for="grupoIndicador">Grupo Indicador o Macroproceso</label>
+       <SELECT NAME="grupoIndicador" class="form-control form-control-sm" id="grupoIndicador"></SELECT>
+       </div>
+	   
+	   <div class="col-lg-2 col-md col-sm col-xs-3">
+       <label for="codigoFin">Fin u Objetivo del Indicador</label>
+       <SELECT NAME="codigoFin" class="form-control form-control-sm" id="codigoFin"></SELECT>
+       </div>
+	   
+	  </div>
+	   
+	  <div class="row">
+
+	   <div class="col-lg-9 col-md col-sm col-xs-12">
+       <label for="codigoObjetivo">Objetivo Estrategico</label>
+       <SELECT NAME="codigoObjetivo" class="form-control form-control-sm" id="codigoObjetivo"></SELECT>
+       </div>
+	 
+	   <div class="col-lg-3 col-md col-sm col-xs-12">
+       <label for="codigoPolitica">Politica Institucional</label>
+       <SELECT NAME="codigoPolitica" class="form-control form-control-sm" id="codigoPolitica"></SELECT>
+       </div>
+
+	   </div>
+	   
+	   <div class="row">
+	   <div class="col-lg-4 col-md col-sm col-xs-12">
+       <label for="codigoProceso">Proceso</label>
+       <SELECT NAME="codigoProceso" class="form-control form-control-sm" id="codigoProceso"></SELECT>
+       </div>
+
+	   <div class="col-lg-3 col-md col-sm col-xs-12">
+       <label for="codigoArea">Area u oficina</label>
+       <SELECT NAME="codigoArea" class="form-control form-control-sm" id="codigoArea"></SELECT>
+       </div>
+	   
+	   	<div class="col-lg col-md col-sm col-xs-12">
+         <label for="grupoEstandar">Grupo Estandar</label>
+         <SELECT NAME="grupoEstandar" class="form-control form-control-sm" id="grupoEstandar"></SELECT>
+        </div>
+	   
+      </div>
+
+	  <div class="row">
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="tipoCalculo">Tipo Calculo</label>
+       <SELECT NAME="tipoCalculo" class="form-control form-control-sm" id="tipoCalculo"></SELECT>
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="estado">Estado</label>
+       <SELECT NAME="estado" class="form-control form-control-sm" id="estado"></SELECT>
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="tipoIndicador">Tipo Indicador</label>
+       <SELECT NAME="tipoIndicador" class="form-control form-control-sm" id="tipoIndicador"></SELECT>
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="frecuenciaDatos">Frecuencia Datos</label>
+       <SELECT NAME="frecuenciaDatos" class="form-control form-control-sm" id="frecuenciaDatos"></SELECT>
+       </div>
+
+      </div>
+
+	  <div class="row">
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="responsableIndicador">Responsable del Calculo</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="responsableIndicador" id="responsableIndicador" maxlength="200"  onkeypress="validarTecla(event, 'AL');">
+       </div>
+	   
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="responsableAnalisis">Responsable Analisis</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="responsableAnalisis" id="responsableAnalisis" maxlength="150"  onkeypress="validarTecla(event, 'AL');">
+       </div>
+
+
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="unidadMedida">Unidad Medida</label>
+        <SELECT NAME="unidadMedida" class="form-control form-control-sm" id="unidadMedida"></SELECT>
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="tendencia">Tendencia</label>
+        <SELECT NAME="tendencia" class="form-control form-control-sm" id="tendencia"></SELECT>
+       </div>
+
+      </div>
+
+	  <div class="row">
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="formula">Formula Operacional</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="formula" id="formula" maxlength="300"  onkeypress="validarTecla(event, 'AL');">
+       </div>
+
+	  </div>
+	   
+	    <div class="row">
+	   
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="numerador">Numerador</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="numerador" id="numerador" maxlength="200"  onkeypress="validarTecla(event, 'AL');">
+       </div>
+	   
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="denominador">Denominador</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="denominador" id="denominador" maxlength="100"  onkeypress="validarTecla(event, 'AL');">
+       </div>
+	   
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="variable3">Variable 3</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="variable3" id="variable3" maxlength="100"  onkeypress="validarTecla(event, 'AL');">
+       </div>
+	   
+	  
+	   <div class="p-3 mb-2 bg-danger text-white">
+       <label for="rangoBajo">Rango Bajo</label>
+       <INPUT TYPE="Text" class="form-control form-control-sm" NAME="rangoBajo" id="rangoBajo" maxlength="7"  onkeypress="validarTecla(event, 'EN');">
+   
+       </div>
+
+	   <div class="p-3 mb-2 bg-warning text-dark">
+       <label for="rangoMedio">Rango Medio</label>
+       <INPUT TYPE="Text" class="form-control form-control-sm" NAME="rangoMedio" id="rangoMedio" maxlength="7"  onkeypress="validarTecla(event, 'EN');">
+       </div>
+
+	   <div class="p-3 mb-2 bg-success text-white">
+       <label for="rangoAlto">Rango Alto</label>
+       <INPUT TYPE="Text" class="form-control form-control-sm" NAME="rangoAlto" id="rangoAlto" maxlength="7"  onkeypress="validarTecla(event, 'EN');">
+       </div>
+
+	   
+	   
+      </div>
+
+	  <div class="row">
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="meta">Meta</label>
+       <INPUT TYPE="Text" class="form-control form-control-sm" NAME="meta" id="meta" maxlength="7"  onkeypress="validarTecla(event, 'EN');">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="atributoCalidad">Atributo Calidad</label>
+       <SELECT NAME="atributoCalidad" class="form-control form-control-sm" id="atributoCalidad"></SELECT>
+       </div>
+
+
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="proyectado">Valor Proyectado</label>
+       <INPUT TYPE="Text" class="form-control form-control-sm" NAME="proyectado" id="proyectado" maxlength="7"  onkeypress="validarTecla(event, 'EN');">
+       </div>
+
+      </div>
+	  
+	  <div class="row">
+	  
+	
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="frecuenciaAnalisis">Frecuencia Analisis</label>
+        <SELECT NAME="frecuenciaAnalisis" class="form-control form-control-sm" id="frecuenciaAnalisis"></SELECT>
+       </div>
+	
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="sustentoNormativo">Sustento Normativo</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="sustentoNormativo" id="sustentoNormativo" maxlength="4"  onkeypress="validarTecla(event, 'EN');">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+        <label for="dominio">Dominio</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="dominio" id="dominio" maxlength="4"  onkeypress="validarTecla(event, 'EN');">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="numeroEstandarAsociado">Numero Estandar Asociados</label>
+       <INPUT TYPE="Text" class="form-control form-control-sm" NAME="numeroEstandarAsociado" id="numeroEstandarAsociado" maxlength="4"  onkeypress="validarTecla(event, 'EN');">
+       </div>
+
+      </div>
+
+	  
+	  <div class="row">
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="fechaInsercion">Fecha Inserci&oacute;n</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="fechaInsercion" id="fechaInsercion" maxlength="10" disabled onkeypress="validarTecla(event, 'FE');">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="usuarioInsercion">Usuario Inserci&oacute;n</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="usuarioInsercion" id="usuarioInsercion" maxlength="20" disabled onkeypress="validarTecla(event, 'AL');">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="fechaModificacion">Fecha Modificaci&oacute;n</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="fechaModificacion" id="fechaModificacion" maxlength="10" disabled onkeypress="validarTecla(event, 'FE');">
+       </div>
+
+	   <div class="col-lg col-md col-sm col-xs-12">
+       <label for="usuarioModificacion">Usuario Modificaci&oacute;n</label>
+        <INPUT TYPE="Text" class="form-control form-control-sm" NAME="usuarioModificacion" id="usuarioModificacion" maxlength="20" disabled onkeypress="validarTecla(event, 'AL');">
+       </div>
+
+      </div>
+
+      <div class="row">
+       <div class="col-lg col-md col-sm col-xs-12">
+        <div class="float-lg-right">
+          <input type="submit" class="btn btn-info" value="Grabar"   id="btnGrabar" onclick="Grabar();">
+          <input type="submit" class="btn btn-info" value="Eliminar" id="btnEliminar" onclick="Eliminar();">
+          <input type="submit" class="btn btn-info" value="Salir"   id="btnSalir" onclick="Salir();">
+        </div>
+       </div>
+      </div>
+     </div>
+
+	</div>
+	
+   <br>
+	
+
+	<div id="content">
+	   <br>
+	   <button id="bt_add" class="btn btn-default">Agregar</button>
+	   <button id="bt_del" class="btn btn-default">Eliminar</button>
+	   <table id="tabla" class="table table-bordered table-hover table-sm">
+		<thead>
+		 <tr>
+			<td> # Reg</td>
+			<td> Documento</td>
+			<td> Nombres y Apellidos</td>
+			<td> Fecha de Nacimimiento</td>
+			<td> Email</td>
+		 </tr>
+		</thead>
+        <tbody id="TableBody">
+
+        </tbody>
+		</table>
+	 </div>	 
+	 
+
+	 <div class="card" style="display:block">
+     <div class="card-header"><span id="fechaA">Fecha Actual</span>.</div>
+     <div class="card-body">
+	 <div>
+		 <script>
+			 <!--
+			 now = new Date();
+			 theHour = now.getHours();
+			 if (theHour < 12) { greeting = 'Buenos dias!  '; }
+			 else if (theHour < 18) { greeting = 'Buenas Tardes! '; }
+			 else { greeting = 'Buenas Noches! '; }
+			 document.write(greeting);
+			 //-->
+
+   			var now   = new Date();
+			var month = '';
+			var year  = '';
+			var date  = now.getDate();
+			if (now.getMonth() == 0) month = 'de enero'
+			if (now.getMonth() == 1) month = 'de febrero'
+			if (now.getMonth() == 2) month = 'de marzo'
+			if (now.getMonth() == 3) month = 'de abril'
+			if (now.getMonth() == 4) month = 'de mayo'
+			if (now.getMonth() == 5) month = 'de junio'
+			if (now.getMonth() == 6) month = 'de julio'
+			if (now.getMonth() == 7) month = 'de agosto'
+			if (now.getMonth() == 8) month = 'de septiembre'
+			if (now.getMonth() == 9) month = 'de octubre '
+			if (now.getMonth() == 10) month = 'de noviembre'
+			if (now.getMonth() == 11) month = 'de diciembre'
+			if (now.getYear() < 2000) year = 1900 + now.getYear()
+			if (now.getYear() >= 2000) var year = now.getYear()
+			document.write(date + '&nbsp;  ' + month + ' de  ' + year + ' . ' )
+			// -->
+		 </script> 
+	 </div>
+	 
+     </div>
+    </div>
+<script>
+     Calendar.setup({
+       inputField :  'fechaNacimiento',
+       ifFormat   :  '%Y-%m-%d',
+       button     :  'bfechaNacimiento'
+      });
+</script>
+	
+</body>
+</html>
+
+
+
